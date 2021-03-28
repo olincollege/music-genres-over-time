@@ -2,11 +2,14 @@
 Create a CSV of the genre and year of the top
 songs from 1946 to 2020.
 """
+
 import csv
 import time
 import discogs_client
+from keys.api_keys import token
 import pandas as pd
 import wikipedia
+
 
 def find_genre(songs):
     """
@@ -19,7 +22,7 @@ def find_genre(songs):
     """
     # Start a client to Discogs servers
     client = discogs_client.Client(
-        'DiscogsClient/1.0', user_token='sWUMMBbXLhNtVbXxeXyimGXfkRAgYcZXUXtwvpkB')
+        'DiscogsClient/1.0', user_token=token)
 
     # Takes only the last name so unexpected words like "featuring" does not mess up discogs API
     artist_last_name = list(songs["Artist(s)"].split(" "))[-1]
@@ -75,7 +78,8 @@ def find_top_songs():
 
     list_all_years = []
     request_global = 0
-    for year_wiki in top_per_year_wikis:
+    # for year_wiki in top_per_year_wikis:
+    for year_wiki in ['Billboard year-end top singles of 1946']:
         # Setting auto suggest to false avoids mistakes in title look up
         wikepedia_url = (wikipedia.page(year_wiki, auto_suggest=False)).url
         # Get all the tables in the site.
@@ -102,7 +106,7 @@ def find_top_songs():
 
         # Start Getting Genres for a certain year.
         print('Flushing Request Window...', end='\r', flush=True)
-        time.sleep(75)
+        time.sleep(5)
         request_local = 0
         for songs in top_songs_list:
             songs["Genre"] = find_genre(songs)
@@ -139,7 +143,7 @@ def create_csv():
     """
 
     list_all_years = find_top_songs()
-    with open('genre_year_data.csv', 'w') as file:
+    with open('genre_year_data2.csv', 'w') as file:
         writer = csv.DictWriter(
             file, fieldnames=["Genre", "Year"])
         writer.writeheader()
