@@ -25,6 +25,7 @@ def count_genres_per_year():
         of songs in each genre for respective year.
     """
     counted_genres = {}
+    total_genres_each_year = {}
     for year in range(1946, 2021):
         counted_genres[year] = {}
 
@@ -44,6 +45,9 @@ def count_genres_per_year():
             for genre in song['Genre']:
                 counted_genres[year][genre] = counted_genres[year].get(
                     genre, 0) + 1
+            #normalize each year so the total coutn for each genre adds up to 100
+            total = sum(counted_genres[year].values(), 0.0)
+            counted_genres[year]= {genre: number *100/ total for genre, number in counted_genres[year].items()}
     return counted_genres
 
 
@@ -77,3 +81,5 @@ def accumulative_genre():
             accumulated_genres[year][genre] = genre_count + \
                 counted_genres[year][genre]
     return accumulated_genres
+
+count_genres_per_year()
