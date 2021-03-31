@@ -61,7 +61,7 @@ def find_top_songs():
     """
     Returns list of dictionary with genre/year of the top songs from 1946-2020.
 
-    Scrapes the wikipedia articles for the top singles of each year from `946 to
+    Scrapes the wikipedia articles for the top singles of each year from `1946 to
     2020 to find the artist, and title of the top songs. Then finds the genre and
     puts it into a list of dictionaries with the format, {"Genre": "some genre",
     "Year": "Current Year"}
