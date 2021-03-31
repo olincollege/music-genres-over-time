@@ -46,11 +46,7 @@ def count_genres_per_year():
                 counted_genres[year][genre] = counted_genres[year].get(
                     genre, 0) + 1
                 
-            #get rid of genres that represent less than 5% of the year's songs
             total_songs = sum(counted_genres[year].values(), 0.0)
-            for genre, number in counted_genres[year].copy().items():
-                if number/total_songs <0.05:
-                    counted_genres[year].pop(genre, None)
             
             #normalize each year so the total coutn for each genre adds up to 100
             counted_genres[year]= {genre: number *100/ total_songs for genre, number in counted_genres[year].items()}
