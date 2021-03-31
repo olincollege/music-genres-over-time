@@ -6,7 +6,7 @@ from count_genres_per_year import *
 import matplotlib as plt
 
 def density_chart():
-    genres_per_year = count_genres_per_year()
+    genres_per_year = count_genres_per_year(1946,2020)
     genres = ['Pop', 'Rock', 'Hip Hop', 'Funk / Soul', 'Electronic', 'Folk World & Country', 'Jazz', 'Stage & Screen', 'Blues', 'Latin']
 
     genre_dict_list = {'Pop':[], 'Rock':[], 'Hip Hop':[], 'Funk / Soul':[], 'Electronic':[], 'Folk World & Country':[], 'Jazz':[], 'Stage & Screen':[], 'Blues':[], 'Latin':[]}
@@ -34,7 +34,7 @@ def density_chart():
     ax.legend(loc='center left', bbox_to_anchor=(1.0, 0.5))
 
 def density_chart_cumulative():
-    genres_per_year = accumulative_genre()
+    genres_per_year = accumulative_genre(1946,2020)
     genres = ['Pop', 'Rock', 'Hip Hop', 'Funk / Soul', 'Electronic', 'Folk World & Country', 'Jazz', 'Stage & Screen', 'Blues', 'Latin']
 
     genre_dict_list = {'Pop':[], 'Rock':[], 'Hip Hop':[], 'Funk / Soul':[], 'Electronic':[], 'Folk World & Country':[], 'Jazz':[], 'Stage & Screen':[], 'Blues':[], 'Latin':[]}

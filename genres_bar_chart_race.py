@@ -18,7 +18,7 @@ def create_dataframe():
         that represent the cumulative number of songs for each genre/year.
 
     """
-    accumulated_genres = count_genres_per_year.accumulative_genre()
+    accumulated_genres = count_genres_per_year.accumulative_genre(1946, 2020)
     genre_year_dataframe = pd.DataFrame(accumulated_genres)
     #switch rows and columns so that the columns are genres and the
     #rows are the years

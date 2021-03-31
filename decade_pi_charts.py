@@ -16,7 +16,7 @@ def total_genre(year_start, year_end):
         and the values being ints representing the total number of songs in each genre
         from year start to year end.
     """
-    counted_genres = count_genres_per_year.count_genres_per_year()
+    counted_genres = count_genres_per_year.count_genres_per_year(1946, 2020)
     total_genre_dic = {}
     # copying the dictionary key instead of setting it equal as to not change the original
     # dictionary python does not implicitly copy objects, meaning that if I set them equal,
