@@ -3,22 +3,53 @@ Contains code to produce visualizations.
 """
 
 import pandas as pd
-import matplotlib as plt
+import matplotlib.pyplot as plt
 import bar_chart_race as bcr
-from count_genres_per_year import *
+import count_genres_per_year
 
 
+def area_chart_decades():
+    """
+    Plots an area chart for the genres of top songs from 1950 to 2020
+    by the decade.
+    """
+    genres_per_year = count_genres_per_year.count_genres_per_year(1946, 2020)
+    every_decade = {}
+    for year in genres_per_year.copy():
+        if year % 10 == 0:
+            every_decade[year] = genres_per_year[year]
 
-def density_chart_decades():
-    genres_per_year = count_genres_per_year()
-    genres = ['Pop', 'Rock', 'Hip Hop', 'Funk / Soul', 'Electronic', 'Folk World & Country', 'Jazz', 'Stage & Screen', 'Blues', 'Latin']
-    genre_dict_list = {'Pop':[], 'Rock':[], 'Hip Hop':[], 'Funk / Soul':[], 'Electronic':[], 'Folk World & Country':[], 'Jazz':[], 'Stage & Screen':[], 'Blues':[], 'Latin':[]}
+    genres = ['Pop', 'Rock', 'Hip Hop', 'Funk / Soul', 'Electronic',
+              'Folk World & Country', 'Jazz', 'Stage & Screen']
+
+    genre_dict_list = {'Pop': [], 'Rock': [], 'Hip Hop': [], 'Funk / Soul': [],
+                       'Electronic': [], 'Folk World & Country': [],
+                       'Jazz': [], 'Stage & Screen': []}
+
     for genre in genres:
-        for year_key in genres_per_year:
+        for year_key in every_decade:
             try:
-                genre_dict_list[genre].append(genres_per_year[year_key][genre])
-            except:
+                genre_dict_list[genre].append(every_decade[year_key][genre])
+            except KeyError:
                 genre_dict_list[genre].append(0)
+
+    genre_dataframe = pd.DataFrame({
+        'Pop': genre_dict_list['Pop'],
+        'Rock': genre_dict_list['Rock'],
+        'Hip Hop': genre_dict_list['Hip Hop'],
+        'Funk/Soul': genre_dict_list['Funk / Soul'],
+        'Electronic': genre_dict_list['Electronic'],
+        'Folk World & Country': genre_dict_list['Folk World & Country'],
+        'Jazz': genre_dict_list['Jazz'],
+        'Stage & Screen': genre_dict_list['Stage & Screen'],
+    }, index=pd.date_range(start='1950', end='2020', periods=8))
+
+    axes = genre_dataframe.plot.area(stacked=False,
+                                     title='Top Genres by the Decades from 1950'+
+                                     ' to 2020', xlabel='Years', ylabel='Normalized'+
+                                     'Number of Songs')
+    axes.legend(loc='center left', bbox_to_anchor=(1.0, 0.5))
+
 
 def create_dataframe():
     """
@@ -33,12 +64,12 @@ def create_dataframe():
     """
     accumulated_genres = count_genres_per_year.accumulative_genre(1946, 2020)
     genre_year_dataframe = pd.DataFrame(accumulated_genres)
-    #switch rows and columns so that the columns are genres and the
-    #rows are the years
+    # switch rows and columns so that the columns are genres and the
+    # rows are the years
     genre_year_dataframe = genre_year_dataframe.T
     genre_year_dataframe.index.name = 'Year'
-    #fill any NaN with 0 instead
-    genre_year_dataframe.fillna(0, inplace = True)
+    # fill any NaN with 0 instead
+    genre_year_dataframe.fillna(0, inplace=True)
     return genre_year_dataframe
 
 
@@ -64,7 +95,7 @@ def create_bar_chart_race():
         label_bars=True,
         bar_size=.95,
         period_label={'x': .99, 'y': .25, 'ha': 'right', 'va': 'center'},
-        period_fmt= 'Year{x:10.0f}',
+        period_fmt='Year{x:10.0f}',
         period_length=500,
         figsize=(5, 3),
         dpi=144,
@@ -73,12 +104,13 @@ def create_bar_chart_race():
         title_size='',
         bar_label_size=7,
         tick_label_size=7,
-        shared_fontdict={'family' : 'DejaVu Sans', 'color' : '.1'},
+        shared_fontdict={'family': 'DejaVu Sans', 'color': '.1'},
         scale='linear',
         writer=None,
         fig=None,
         bar_kwargs={'alpha': .7},
         filter_column_colors=True)
+
 
 def total_genre(year_start, year_end):
     """
@@ -86,12 +118,12 @@ def total_genre(year_start, year_end):
 
     Returns a dictionary that has genres as keys, and the total number of songs from
     year start to year end in each genre as the values.
-    
+
     ARGS:
         year_start: an int representing the first year that we start counting songs.
         year_end: an int representing the last year we count the songs.
     RETURNS:
-        total_genre: A dictionary with the keys being strings representing each genre, 
+        total_genre: A dictionary with the keys being strings representing each genre,
         and the values being ints representing the total number of songs in each genre
         from year start to year end.
     """
@@ -104,18 +136,31 @@ def total_genre(year_start, year_end):
     for year in range(year_start+1, year_end+1):
         # add all genres from past year and current year
         for genre in counted_genres[year]:
-            total_genre_dic[genre]= total_genre_dic.get(genre,0) + counted_genres[year][genre]
-     
-    #get rid of genres that make up less than 5% of the genres
+            total_genre_dic[genre] = total_genre_dic.get(
+                genre, 0) + counted_genres[year][genre]
+
+    # get rid of genres that make up less than 5% of the genres
     total_songs = sum(total_genre_dic.values(), 0.0)
     for genre, number in total_genre_dic.copy().items():
-        if number/total_songs <0.05:
+        if number/total_songs < 0.05:
             total_genre_dic.pop(genre, None)
     return total_genre_dic
 
 
-def create_pichart(year_start,year_end):
-    total_genre_dic = total_genre(year_start,year_end)
+def create_pichart(year_start, year_end):
+    """
+    Plots and saves pie charts for genres over a certain timeframe.
+
+    Plots and saves pie charts based on a year start and a year end.
+    Each slice of the pie chart represents a genre, and its size is
+    determined by the prevelence of the genre in a certain time period
+    compared to other genres.
+
+    ARGS:
+        year_start: an int representing the first year that we start counting songs.
+        year_end: an int representing the last year we count the songs.
+    """
+    total_genre_dic = total_genre(year_start, year_end)
     labels = []
     sizes = []
 
@@ -127,73 +172,24 @@ def create_pichart(year_start,year_end):
     plt.pie(sizes, autopct='%1.1f%%')
     plt.title(f'Top Genres from {year_start} to {year_end}')
     plt.legend(labels,
-          title="Genres",
-          loc="center left",
-          bbox_to_anchor=(0.8, 0, 1, 1.3))
+               title="Genres",
+               loc="center left",
+               bbox_to_anchor=(0.8, 0, 1, 1.3))
     plt.axis('equal')
-    plt.savefig(f'pi_chart{year_start}-{year_end}.png',bbox_inches='tight')
+    plt.savefig(f'pi_chart{year_start}-{year_end}.png', bbox_inches='tight')
     plt.clf()
 
+
 def generate_pies():
+    """
+    Creates pie charts for 5 different time periods.
 
-    create_pichart(1946,1949)
-    create_pichart(1950,1969)
-    create_pichart(1970,1989)
-    create_pichart(1990,2009)
+    Creates pie charts that break down the percantage of the genres in
+    the top charts for the time periods throughout 1946 to 2020.
+    """
+
+    create_pichart(1946, 1949)
+    create_pichart(1950, 1969)
+    create_pichart(1970, 1989)
+    create_pichart(1990, 2009)
     create_pichart(2010, 2020)
-
-def density_chart():
-    genres_per_year = count_genres_per_year(1946,2020)
-    genres = ['Pop', 'Rock', 'Hip Hop', 'Funk / Soul', 'Electronic', 'Folk World & Country', 'Jazz', 'Stage & Screen', 'Blues', 'Latin']
-
-    genre_dict_list = {'Pop':[], 'Rock':[], 'Hip Hop':[], 'Funk / Soul':[], 'Electronic':[], 'Folk World & Country':[], 'Jazz':[], 'Stage & Screen':[], 'Blues':[], 'Latin':[]}
-    for genre in genres:
-        for year_key in genres_per_year:
-            try:
-                genre_dict_list[genre].append(genres_per_year[year_key][genre])
-            except:
-                genre_dict_list[genre].append(0)
-
-    df = pd.DataFrame({
-        'Pop': genre_dict_list['Pop'],
-        'Rock': genre_dict_list['Rock'],
-        'Hip Hop': genre_dict_list['Hip Hop'],
-        'Funk/Soul': genre_dict_list['Funk / Soul'],
-        'Electronic': genre_dict_list['Electronic'],
-        'Folk World & Country': genre_dict_list['Folk World & Country'],
-        'Jazz': genre_dict_list['Jazz'],
-        'Stage & Screen': genre_dict_list['Stage & Screen'],
-        'Blues': genre_dict_list['Blues'],
-        'Latin': genre_dict_list['Latin'],
-    }, index=pd.date_range(start='1946',end='2021', freq='Y'))
-
-    ax = df.plot.area(stacked=False)
-    ax.legend(loc='center left', bbox_to_anchor=(1.0, 0.5))
-
-def density_chart_cumulative():
-    genres_per_year = accumulative_genre(1946,2020)
-    genres = ['Pop', 'Rock', 'Hip Hop', 'Funk / Soul', 'Electronic', 'Folk World & Country', 'Jazz', 'Stage & Screen', 'Blues', 'Latin']
-
-    genre_dict_list = {'Pop':[], 'Rock':[], 'Hip Hop':[], 'Funk / Soul':[], 'Electronic':[], 'Folk World & Country':[], 'Jazz':[], 'Stage & Screen':[], 'Blues':[], 'Latin':[]}
-    for genre in genres:
-        for year_key in genres_per_year:
-            try:
-                genre_dict_list[genre].append(genres_per_year[year_key][genre])
-            except:
-                genre_dict_list[genre].append(0)
-
-    df = pd.DataFrame({
-        'Pop': genre_dict_list['Pop'],
-        'Rock': genre_dict_list['Rock'],
-        'Hip Hop': genre_dict_list['Hip Hop'],
-        'Funk/Soul': genre_dict_list['Funk / Soul'],
-        'Electronic': genre_dict_list['Electronic'],
-        'Folk World & Country': genre_dict_list['Folk World & Country'],
-        'Jazz': genre_dict_list['Jazz'],
-        'Stage & Screen': genre_dict_list['Stage & Screen'],
-        'Blues': genre_dict_list['Blues'],
-        'Latin': genre_dict_list['Latin'],
-    }, index=pd.date_range(start='1946',end='2021', freq='Y'))
-
-    ax = df.plot.area(stacked=False)
-    ax.legend(loc='center left', bbox_to_anchor=(1.0, 0.5))
