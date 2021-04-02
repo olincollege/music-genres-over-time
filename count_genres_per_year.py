@@ -10,7 +10,7 @@ import csv
 import ast
 
 
-def count_genres_per_year(year_start, year_end):
+def count_genres_per_year(genre_data, year_start, year_end):
     """
     Returns a dictionary of the number of songs per genre in each year.
 
@@ -25,11 +25,11 @@ def count_genres_per_year(year_start, year_end):
         of songs in each genre for respective year.
     """
     counted_genres = {}
-    total_genres_each_year = {}
+
     for year in range(year_start, year_end+1):
         counted_genres[year] = {}
 
-    with open('genre_year_data.csv', 'r') as data:
+    with open(genre_data, 'r') as data:
         # goes through each song
         for song in csv.DictReader(data):
             # if there is no genre listed, skip to the next song
@@ -45,15 +45,17 @@ def count_genres_per_year(year_start, year_end):
             for genre in song['Genre']:
                 counted_genres[year][genre] = counted_genres[year].get(
                     genre, 0) + 1
-                
-            total_songs = sum(counted_genres[year].values(), 0.0)
-            
-            #normalize each year so the total coutn for each genre adds up to 100
-            counted_genres[year]= {genre: number *100/ total_songs for genre, number in counted_genres[year].items()}
     return counted_genres
 
+def count_genres_per_year_normalized(genre_data, year_start, year_end):
+    counted_genres = count_genres_per_year(genre_data, year_start, year_end).copy()
+    for year in range(year_start, year_end+1):
+        total_songs = sum(counted_genres[year].copy().values(), 0.0)
+    #normalize each year so the total coutn for each genre adds up to 100
+        counted_genres[year]= {genre: number *100/ total_songs for genre, number in counted_genres[year].items()}
+    return counted_genres
 
-def accumulative_genre(year_start, year_end):
+def accumulative_genre(genre_data, year_start, year_end):
     """
     Returns a dictionary of the cumulative number of songs per genre in each year.
 
@@ -69,7 +71,7 @@ def accumulative_genre(year_start, year_end):
         songs, and 1947 has 15 pop songs, the cumulative number for 1947 is 25 pop
         songs.
     """
-    counted_genres = count_genres_per_year(year_start, year_end)
+    counted_genres = count_genres_per_year_normalized(genre_data, year_start, year_end)
     accumulated_genres = {}
     # copying the dictionary key instead of setting it equal as to not change the original
     # dictionary python does not implicitly copy objects, meaning that if I set them equal,
@@ -83,4 +85,7 @@ def accumulative_genre(year_start, year_end):
             accumulated_genres[year][genre] = genre_count + \
                 counted_genres[year][genre]
     return accumulated_genres
+
+
+accumulative_genre('genre_year_data.csv',1946,2020)
 

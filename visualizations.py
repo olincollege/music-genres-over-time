@@ -13,7 +13,7 @@ def area_chart_decades():
     Plots an area chart for the genres of top songs from 1950 to 2020
     by the decade.
     """
-    genres_per_year = count_genres_per_year.count_genres_per_year(1946, 2020)
+    genres_per_year = count_genres_per_year.count_genres_per_year('genre_year_data.csv',1946, 2020)
     every_decade = {}
     for year in genres_per_year.copy():
         if year % 10 == 0:
@@ -62,7 +62,7 @@ def create_dataframe():
         that represent the cumulative number of songs for each genre/year.
 
     """
-    accumulated_genres = count_genres_per_year.accumulative_genre(1946, 2020)
+    accumulated_genres = count_genres_per_year.accumulative_genre('genre_year_data.csv', 1946, 2020)
     genre_year_dataframe = pd.DataFrame(accumulated_genres)
     # switch rows and columns so that the columns are genres and the
     # rows are the years
@@ -127,7 +127,7 @@ def total_genre(year_start, year_end):
         and the values being ints representing the total number of songs in each genre
         from year start to year end.
     """
-    counted_genres = count_genres_per_year.count_genres_per_year(1946, 2020)
+    counted_genres = count_genres_per_year.count_genres_per_year('genre_year_data.csv', 1946, 2020)
     total_genre_dic = {}
     # copying the dictionary key instead of setting it equal as to not change the original
     # dictionary python does not implicitly copy objects, meaning that if I set them equal,
