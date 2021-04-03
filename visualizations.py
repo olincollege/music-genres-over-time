@@ -6,6 +6,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import bar_chart_race as bcr
 import count_genres_per_year
+from IPython.display import HTML
+
 
 
 def area_chart_decades():
@@ -82,36 +84,17 @@ def create_bar_chart_race():
     """
 
     genre_year_dataframe = create_dataframe()
-    bcr.bar_chart_race(
+    race = bcr.bar_chart_race(
         df=genre_year_dataframe,
-        filename='popular_genres_over_time.mp4',
-        orientation='h',
-        sort='desc',
+        #filename= 'popular_genres_over_time.mp4',
         n_bars=10,
-        fixed_order=False,
-        fixed_max=False,
-        steps_per_period=10,
-        interpolate_period=False,
-        label_bars=True,
-        bar_size=.95,
         period_label={'x': .99, 'y': .25, 'ha': 'right', 'va': 'center'},
         period_fmt='Year{x:10.0f}',
-        period_length=500,
-        figsize=(5, 3),
-        dpi=144,
-        cmap='dark12',
         title='Genres of the Top Songs from 1946 to 2020',
         title_size='',
-        bar_label_size=7,
-        tick_label_size=7,
         shared_fontdict={'family': 'DejaVu Sans', 'color': '.1'},
-        scale='linear',
-        writer=None,
-        fig=None,
-        bar_kwargs={'alpha': .7},
         filter_column_colors=True)
-
-
+    return race.data
 def total_genre(year_start, year_end):
     """
     Returns a dictionary of the total count of each genre from year start to year end.
@@ -186,9 +169,9 @@ def generate_pies():
     the top charts for the time periods throughout 1946 to 2020.
     """
 
-    create_pichart(1946, 1949)
-    create_pichart(1950, 1969)
-    create_pichart(1970, 1989)
-    create_pichart(1990, 2009)
-    create_pichart(2010, 2020)
+    create_pichart(1946, 1964)
+    create_pichart(1965, 1980)
+    create_pichart(1981, 1996)
+    create_pichart(1997, 2015)
+    create_pichart(2016, 2020)
     
