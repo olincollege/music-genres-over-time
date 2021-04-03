@@ -13,7 +13,7 @@ def area_chart_decades():
     Plots an area chart for the genres of top songs from 1950 to 2020
     by the decade.
     """
-    genres_per_year = count_genres_per_year.count_genres_per_year('genre_year_data.csv',1946, 2020)
+    genres_per_year = count_genres_per_year.count_genres_per_year_normalized('genre_year_data.csv',1946, 2020)
     every_decade = {}
     for year in genres_per_year.copy():
         if year % 10 == 0:
@@ -127,7 +127,7 @@ def total_genre(year_start, year_end):
         and the values being ints representing the total number of songs in each genre
         from year start to year end.
     """
-    counted_genres = count_genres_per_year.count_genres_per_year('genre_year_data.csv', 1946, 2020)
+    counted_genres = count_genres_per_year.count_genres_per_year_normalized('genre_year_data.csv', 1946, 2020)
     total_genre_dic = {}
     # copying the dictionary key instead of setting it equal as to not change the original
     # dictionary python does not implicitly copy objects, meaning that if I set them equal,
@@ -176,9 +176,7 @@ def create_pichart(year_start, year_end):
                loc="center left",
                bbox_to_anchor=(0.8, 0, 1, 1.3))
     plt.axis('equal')
-    plt.savefig(f'pi_chart{year_start}-{year_end}.png', bbox_inches='tight')
-    plt.clf()
-
+    return plt.show()
 
 def generate_pies():
     """
@@ -193,3 +191,4 @@ def generate_pies():
     create_pichart(1970, 1989)
     create_pichart(1990, 2009)
     create_pichart(2010, 2020)
+    
