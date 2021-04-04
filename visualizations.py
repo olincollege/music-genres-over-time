@@ -51,7 +51,9 @@ def area_chart_decades():
                                      ' to 2020', xlabel='Years', ylabel='Normalized'+
                                      'Number of Songs')
     axes.legend(loc='center left', bbox_to_anchor=(1.0, 0.5))
-
+    #uncomment this line to save the area chart plot
+    #plt.savefig('Area_Chart.png',bbox_inches='tight')
+                
 
 def create_dataframe():
     """
@@ -86,10 +88,12 @@ def create_bar_chart_race():
     genre_year_dataframe = create_dataframe()
     race = bcr.bar_chart_race(
         df=genre_year_dataframe,
+        #uncomment this line to save the bar plot race
         #filename= 'popular_genres_over_time.mp4',
         n_bars=10,
         period_label={'x': .99, 'y': .25, 'ha': 'right', 'va': 'center'},
         period_fmt='Year{x:10.0f}',
+        dpi=400,
         title='Genres of the Top Songs from 1946 to 2020',
         title_size='',
         shared_fontdict={'family': 'DejaVu Sans', 'color': '.1'},
@@ -159,6 +163,8 @@ def create_pichart(year_start, year_end):
                loc="center left",
                bbox_to_anchor=(0.8, 0, 1, 1.3))
     plt.axis('equal')
+    #uncomment this line to save the pie plots
+    #plt.savefig(f'{year_start}_to_{year_end}_genre_pie_chart.png',bbox_inches='tight')
     return plt.show()
 
 def generate_pies():
@@ -175,3 +181,6 @@ def generate_pies():
     create_pichart(1997, 2015)
     create_pichart(2016, 2020)
     
+area_chart_decades()
+create_bar_chart_race()
+generate_pies()
