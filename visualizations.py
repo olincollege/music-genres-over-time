@@ -90,6 +90,7 @@ def create_bar_chart_race():
         n_bars=10,
         period_label={'x': .99, 'y': .25, 'ha': 'right', 'va': 'center'},
         period_fmt='Year{x:10.0f}',
+        dpi=400,
         title='Genres of the Top Songs from 1946 to 2020',
         title_size='',
         shared_fontdict={'family': 'DejaVu Sans', 'color': '.1'},
