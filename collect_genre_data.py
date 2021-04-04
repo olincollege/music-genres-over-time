@@ -79,7 +79,7 @@ def find_top_songs():
     list_all_years = []
     request_global = 0
     # for year_wiki in top_per_year_wikis:
-    for year_wiki in ['Billboard year-end top singles of 1946']:
+    for year_wiki in ["Billboard Year-End Hot 100 singles of 1959"]:
         # Setting auto suggest to false avoids mistakes in title look up
         wikepedia_url = (wikipedia.page(year_wiki, auto_suggest=False)).url
         # Get all the tables in the site.
@@ -128,7 +128,7 @@ def find_top_songs():
                     time.sleep(1)
                 request_global += request_local
                 request_local = 0
-        print(f"{year} is done!{' ' * 15}")
+        print(f"{year} is done!{' ' * 35}")
         list_all_years += top_songs_list
     return list_all_years
 
@@ -143,12 +143,11 @@ def create_csv():
     """
 
     list_all_years = find_top_songs()
-    with open('genre_year_data2.csv', 'w') as file:
+    with open('genre_year_data1959.csv', 'w') as file:
         writer = csv.DictWriter(
             file, fieldnames=["Genre", "Year"])
         writer.writeheader()
         writer.writerows(list_all_years)
     file.close()
-
 
 create_csv()
