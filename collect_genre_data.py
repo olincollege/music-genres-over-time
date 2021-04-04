@@ -72,7 +72,7 @@ def find_top_songs():
     """
     top_songs1950 = wikipedia.page("Billboard year-end top 30 singles of 1950")
     # Gets a list of all the names of the articles for hot singles for each year.
-    top_per_year_wikis = top_songs1950.links[10:83]
+    top_per_year_wikis = top_songs1950.links[9:83]
     # Makes sure we're accoutning for 1950, because that's the page we got all the links from.
     top_per_year_wikis.append("Billboard year-end top 30 singles of 1950")
 
