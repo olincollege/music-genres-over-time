@@ -40,7 +40,7 @@ count_genres_per_year_normalized_cases = [
         {'Pop': 50.0,'Rock': 50.0},1961: {'Blues': 25.0,
         'Folk World & Country': 25.0,'Jazz': 25.0,'Pop': 25.0},})
 ]
- 
+
 accumulative_genre_cases = [
     # Test that it behaves correctly when given an empty dictionary.
     ('data_test/accumulative_genre_1.csv', 1960, 1961, {1960: {}, 1961: {}}),
@@ -90,7 +90,7 @@ def test_count_genres_per_year_normalized(path, year_start, year_end,
     """
     assert count_genres_per_year_normalized(path, year_start, year_end) == \
         processed_data
-    
+
 @pytest.mark.parametrize("path, year_start, year_end, processed_data",
     count_genres_per_year_normalized_cases)
 def test_count_genres_per_year_normalized_add(path, year_start, year_end,

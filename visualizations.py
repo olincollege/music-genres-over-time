@@ -6,8 +6,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import bar_chart_race as bcr
 import count_genres_per_year
-from IPython.display import HTML
-
 
 
 def area_chart_decades():
@@ -15,7 +13,8 @@ def area_chart_decades():
     Plots an area chart for the genres of top songs from 1950 to 2020
     by the decade.
     """
-    genres_per_year = count_genres_per_year.count_genres_per_year_normalized('genre_year_data.csv',1946, 2020)
+    genres_per_year = count_genres_per_year.count_genres_per_year_normalized('genre_year_data.csv' \
+                                                                             ,1946, 2020)
     every_decade = {}
     for year in genres_per_year.copy():
         if year % 10 == 0:
@@ -52,8 +51,8 @@ def area_chart_decades():
                                      'Number of Songs')
     axes.legend(loc='center left', bbox_to_anchor=(1.0, 0.5))
     #uncomment this line to save the area chart plot
-    plt.savefig('visualizations/Area_Chart.png',bbox_inches='tight')
-                
+    #plt.savefig('visualizations/Area_Chart.png',bbox_inches='tight')
+
 
 def create_dataframe():
     """
@@ -114,7 +113,8 @@ def total_genre(year_start, year_end):
         and the values being ints representing the total number of songs in each genre
         from year start to year end.
     """
-    counted_genres = count_genres_per_year.count_genres_per_year_normalized('genre_year_data.csv', 1946, 2020)
+    counted_genres = count_genres_per_year.count_genres_per_year_normalized('genre_year_data.csv' \
+                                                                            , 1946, 2020)
     total_genre_dic = {}
     # copying the dictionary key instead of setting it equal as to not change the original
     # dictionary python does not implicitly copy objects, meaning that if I set them equal,
@@ -164,7 +164,8 @@ def create_pichart(year_start, year_end):
                bbox_to_anchor=(0.8, 0, 1, 1.3))
     plt.axis('equal')
     #uncomment this line to save the pie plots
-    #plt.savefig(f'visualizations/{year_start}_to_{year_end}_genre_pie_chart.png',bbox_inches='tight')
+    #plt.savefig(f'visualizations/{year_start}_to_{year_end}_genre_pie_chart.png', \
+    #           bbox_inches='tight')
     return plt.show()
 
 def generate_pies():
@@ -180,7 +181,7 @@ def generate_pies():
     create_pichart(1981, 1996)
     create_pichart(1997, 2015)
     create_pichart(2016, 2020)
-    
+
 #uncomment this line to save the plots.
 #area_chart_decades()
 #create_bar_chart_race()
