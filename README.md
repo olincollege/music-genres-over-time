@@ -14,5 +14,5 @@ Information on the bar chart race can be found [here](https://www.dexplo.org/bar
  ## Instructions for Obtaining and Visualizing data
  
  * To obtain the data run collect_genre_data.py. This will create a csv called "genre_year_data.csv" that holds all of the top genres per year. Note that due to rate limits in how many requests can be made in a minute, this may take more than 8 hours
- * To see the visualizations, simply run music-genres-over-time.ipynb
- * If you would like to save all of the visualizations, uncomment all of the lines in visualizations.py that say "uncomment this line to save the [type of plot]," and run visualizations.py
+ * To see the visualizations and computational essay simply go to music-genres-over-time.ipynb and run the notebook
+ * If you would like to save all of the visualizations, uncomment all of the lines in visualizations.py that are below the comment that says "uncomment this line to save the [type of plot]," and run visualizations.py. This will save all of the visualizations to the folder visualizations
