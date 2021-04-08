@@ -17,3 +17,8 @@ Information on the bar chart race can be found [here](https://www.dexplo.org/bar
  * To obtain the data run collect_genre_data.py. This will create a csv called "genre_year_data.csv" that holds all of the top genres per year. Note that due to rate limits in how many requests can be made in a minute, this may take more than 8 hours
  * To see the visualizations, simply run music-genres-over-time.ipynb
  * If you would like to save all of the visualizations, uncomment all of the lines in visualizations.py that say "uncomment this line to save the [type of plot]," and run visualizations.py
+ 
+## Unit Tests
+
+In order to run the unit tests first comment the line that says "uncomment this line for unit tests," then run `$pytest test_cases.py'
+
