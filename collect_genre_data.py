@@ -69,7 +69,6 @@ def find_wiki_titles():
     top_per_year_wikis = top_songs1950.links[9:83]
     # Makes sure we're accoutning for 1950, because that's the page we got all the links from.
     top_per_year_wikis.append('Billboard year-end top 30 singles of 1950')
-    print(top_per_year_wikis)
     return top_per_year_wikis
 
 def find_top_songs():
@@ -169,4 +168,4 @@ def create_csv():
         writer.writerows(list_all_years)
     file.close()
 
-find_wiki_titles()
+find_top_songs()
