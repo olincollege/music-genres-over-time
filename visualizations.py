@@ -56,7 +56,7 @@ def area_chart_decades():
                                      ' to 2020', xlabel='Years', ylabel='Normalized' +
                                      'Number of Songs')
     axes.legend(loc='center left', bbox_to_anchor=(1.0, 0.5))
-    # uncomment this line to save the area chart plot
+    # uncomment these line(s) to save the area chart plot
     # plt.savefig('visualizations/Area_Chart.png',bbox_inches='tight')
 
 
@@ -187,7 +187,7 @@ def create_pichart(year_start, year_end):
                loc="center left",
                bbox_to_anchor=(0.8, 0, 1, 1.3))
     plt.axis('equal')
-    #uncomment this line to save the pie plots
+    #uncomment these line(s) to save the pie plots
     #plt.savefig(f'visualizations/{year_start}_to_{year_end}_genre_pie_chart.png', \
                #bbox_inches='tight')
 
@@ -212,7 +212,7 @@ def generate_pies():
     create_pichart(1997, 2015)
     create_pichart(2016, 2020)
 
-# uncomment this line to save the plots.
+# uncomment these line(s) to save the plots.
 # area_chart_decades()
 # create_bar_chart_race()
 # generate_pies()

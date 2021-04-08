@@ -16,7 +16,7 @@ Information on the bar chart race can be found [here](https://www.dexplo.org/bar
  * In order to use the Discogs API, you need to first obtain a token. Register for an account on https://www.discogs.com/my. Then go to the following link and click "Generate new token": https://www.discogs.com/settings/developers. Copy this token. In your local repository, create a new folder named "keys" and create a new python file named "api_keys.py." Set the variable name "token" to the token you copied earlier.
  * To obtain the data run collect_genre_data.py. This will create a csv called "genre_year_data.csv" that holds all of the top genres per year. Note that due to rate limits in how many requests can be made in a minute, this may take more than 8 hours
  * To see the visualizations, simply run music-genres-over-time.ipynb
- * If you would like to save all of the visualizations, uncomment all of the lines in visualizations.py that say "uncomment this line to save the [type of plot]," and comment the line that says "comment this line if saving the bar plot race" and run visualizations.py. This will save all of the plots to the folder named "visualizations."
+ * If you would like to save all of the visualizations, uncomment all of the lines in visualizations.py that say "uncomment these line(s) to save the [type of plot]," and comment the line that says "comment this line if saving the bar plot race" and run visualizations.py. This will save all of the plots to the folder named "visualizations."
  
 ## Unit Tests
 
