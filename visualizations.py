@@ -179,6 +179,7 @@ def create_pichart(year_start, year_end):
         sizes.append(number)
 
     # Plot
+    plt.clf()
     plt.pie(sizes, autopct='%1.1f%%')
     plt.title(f'Top Genres from {year_start} to {year_end}')
     plt.legend(labels,
@@ -186,9 +187,9 @@ def create_pichart(year_start, year_end):
                loc="center left",
                bbox_to_anchor=(0.8, 0, 1, 1.3))
     plt.axis('equal')
-    # uncomment this line to save the pie plots
-    # plt.savefig(f'visualizations/{year_start}_to_{year_end}_genre_pie_chart.png', \
-    #           bbox_inches='tight')
+    #uncomment this line to save the pie plots
+    #plt.savefig(f'visualizations/{year_start}_to_{year_end}_genre_pie_chart.png', \
+               #bbox_inches='tight')
 
 
 def generate_pies():
