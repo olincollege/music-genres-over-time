@@ -10,7 +10,6 @@ for the years before it.
 import csv
 import ast
 
-
 def count_genres_per_year(genre_data, year_start, year_end):
     """
     Returns a dictionary of the number of songs per genre in each year.

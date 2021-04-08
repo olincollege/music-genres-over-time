@@ -1,15 +1,14 @@
 """
-Create a CSV of the genre and year of the top
-songs from 1946 to 2020.
+Collect songs and authors from the top Billboard charts from Wikipedia and
+find genres on Discogs from that data.
 """
 
 import csv
 import time
 import discogs_client
-from keys.api_keys import token
-import pandas as pd
 import wikipedia
-
+import pandas as pd
+from keys.api_keys import token
 
 def find_genre(songs):
     """
@@ -28,13 +27,15 @@ def find_genre(songs):
     artist_last_name = list(songs['Artist(s)'].split(' '))[-1]
 
     # Strips apostrophes produced by wikipedia API.
+    # Input data looks like this: '"Let it go"'.
     title_processed = songs['Title'].strip('"')
 
     # Search for song using the title, and artist's last name.
     result = client.search(title=title_processed, artist=artist_last_name)
 
     # Search for first release object.
-    # Note: Only finds the first usable object, may cause unexpected behavior!
+    # Note: Only finds the first object with genre data, may cause unexpected
+    # behavior!
     is_release = 0
     count = 0
     genres = None
@@ -50,12 +51,26 @@ def find_genre(songs):
             count += 1
         except IndexError:
             break
-
-    # For testing purposes
-    # print(songs['Title'].strip('"') + ' ' + songs["Artist(s)"])
-    # print(genres)
     return genres
 
+def find_wiki_titles():
+    """
+    Finds all the top Billboard chart titles for years from 1946 to 2020 and
+    places them into a list.
+
+    Args:
+        None
+    Returns:
+        top_per_year_wikis: A list representing all the Billboard charts for
+        all the years from 1946 to 2020.
+    """
+    top_songs1950 = wikipedia.page('Billboard year-end top 30 singles of 1950')
+    # Gets a list of all the names of the articles for hot singles for each year.
+    top_per_year_wikis = top_songs1950.links[9:83]
+    # Makes sure we're accoutning for 1950, because that's the page we got all the links from.
+    top_per_year_wikis.append('Billboard year-end top 30 singles of 1950')
+    print(top_per_year_wikis)
+    return top_per_year_wikis
 
 def find_top_songs():
     """
@@ -66,16 +81,15 @@ def find_top_songs():
     puts it into a list of dictionaries with the format, {"Genre": "some genre",
     "Year": "Current Year"}.
 
-    RETURNS:
+    Args:
+        None
+
+    Returns:
         list_all_years: A list of dictionaries with strings representing the genre
             and year of each of the top songs from 1946 to 2020.
     """
-    top_songs1950 = wikipedia.page('Billboard year-end top 30 singles of 1950')
-    # Gets a list of all the names of the articles for hot singles for each year.
-    top_per_year_wikis = top_songs1950.links[9:83]
-    # Makes sure we're accoutning for 1950, because that's the page we got all the links from.
-    top_per_year_wikis.append('Billboard year-end top 30 singles of 1950')
 
+    top_per_year_wikis = find_wiki_titles()
     list_all_years = []
     request_global = 0
     for year_wiki in top_per_year_wikis:
@@ -103,7 +117,6 @@ def find_top_songs():
 
         # Convert dataframe into a list of dictionaries
         top_songs_list = top_songs_data_frame.to_dict('records')
-
         # Start Getting Genres for a certain year.
         print('Flushing Request Window...', end='\r', flush=True)
         time.sleep(75)
@@ -140,6 +153,12 @@ def create_csv():
     Writes the list of dictionaries of all top songs to a CSV file.
     The CSV file has two headers of Genre and Year, and each row has
     the genre and year of each top song.
+
+    Args:
+        None
+
+    Returns:
+        None
     """
 
     list_all_years = find_top_songs()
@@ -149,4 +168,5 @@ def create_csv():
         writer.writeheader()
         writer.writerows(list_all_years)
     file.close()
-    
+
+find_wiki_titles()
