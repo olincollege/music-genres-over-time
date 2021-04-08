@@ -10,13 +10,15 @@ import wikipedia
 import pandas as pd
 from keys.api_keys import token
 
+
 def find_genre(songs):
     """
     Finds the genre(s) of a song by using the Discogs API.
 
-    ARGS:
+    Args:
         songs: A dictionary containing the artist and title of each song.
-    RETURNS:
+
+    Returns:
         genres: A list of strings representing the genres of a song.
     """
     # Start a client to Discogs servers
@@ -53,6 +55,7 @@ def find_genre(songs):
             break
     return genres
 
+
 def find_wiki_titles():
     """
     Finds all the top Billboard chart titles for years from 1946 to 2020 and
@@ -60,6 +63,7 @@ def find_wiki_titles():
 
     Args:
         None
+
     Returns:
         top_per_year_wikis: A list representing all the Billboard charts for
         all the years from 1946 to 2020.
@@ -69,8 +73,8 @@ def find_wiki_titles():
     top_per_year_wikis = top_songs1950.links[9:83]
     # Makes sure we're accoutning for 1950, because that's the page we got all the links from.
     top_per_year_wikis.append('Billboard year-end top 30 singles of 1950')
-    print(top_per_year_wikis)
     return top_per_year_wikis
+
 
 def find_top_songs():
     """
@@ -93,7 +97,7 @@ def find_top_songs():
     list_all_years = []
     request_global = 0
     for year_wiki in top_per_year_wikis:
-    # for year_wiki in ["Billboard Year-End Hot 100 singles of 1959"]:
+        # for year_wiki in ["Billboard Year-End Hot 100 singles of 1959"]:
         # Setting auto suggest to false avoids mistakes in title look up
         wikepedia_url = (wikipedia.page(year_wiki, auto_suggest=False)).url
         # Get all the tables in the site.
@@ -127,11 +131,11 @@ def find_top_songs():
             songs.pop('Artist(s)', None)
 
             request_local += 1
-            #allows user to keep track of how many requests has been made
+            # allows user to keep track of how many requests has been made
             print(f'{request_local+request_global} requests has been made!{" " * 20}',
                   end='\r', flush=True)
             time.sleep(1)
-            #creates delay because requests are capped at 30 requests per minute
+            # creates delay because requests are capped at 30 requests per minute
             if request_local == 30:
                 seconds = 75
                 while seconds > 0:
@@ -169,4 +173,5 @@ def create_csv():
         writer.writerows(list_all_years)
     file.close()
 
-find_wiki_titles()
+
+find_top_songs()
