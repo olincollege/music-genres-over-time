@@ -115,7 +115,7 @@ def find_top_songs():
 
             request_local += 1
             #allows user to keep track of how many requests has been made
-            print(f'{request_local+request_global} requests has been made!{' ' * 20}',
+            print(f'{request_local+request_global} requests has been made!{" " * 20}',
                   end='\r', flush=True)
             time.sleep(1)
             #creates delay because requests are capped at 30 requests per minute
@@ -128,7 +128,7 @@ def find_top_songs():
                     time.sleep(1)
                 request_global += request_local
                 request_local = 0
-        print(f'{year} is done!{' ' * 35}')
+        print(f'{year} is done!{" " * 35}')
         list_all_years += top_songs_list
     return list_all_years
 

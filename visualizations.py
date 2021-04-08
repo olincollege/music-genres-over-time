@@ -100,6 +100,7 @@ def create_bar_chart_race():
         title_size='',
         shared_fontdict={'family': 'DejaVu Sans', 'color': '.1'},
         filter_column_colors=True)
+    #comment this line if saving the bar plot race
     return race.data
 def total_genre(year_start, year_end):
     """
