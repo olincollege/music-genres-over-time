@@ -9,7 +9,7 @@ To process data, install [pandas](https://pandas.pydata.org/docs/getting_started
 To visualize the plots, matplotlib is needed. Installation instruction as well as more information on the pacakge can be found [here](https://matplotlib.org/stable/users/installing.html). To install it using pip use the following commands `$python -m pip install -U pip`, `$python -m pip install -U matplotlib`. Next for the bar chart race, you.
 
 Information on the bar chart race can be found [here](https://www.dexplo.org/bar_chart_race/). To install it use the command `$pip install bar_chart_race`.
- To see the bar chart race, [ffmpeg](https://www.dexplo.org/bar_chart_race/installation/#installing-ffmpeg) is needed. To download it, go to the [ffmpeg](https://www.ffmpeg.org/download.html) site.
+ To see the bar chart race, [ffmpeg](https://www.dexplo.org/bar_chart_race/installation/#installing-ffmpeg) is needed. To download it, go to the [ffmpeg](https://www.ffmpeg.org/download.html) site. After downloading it
  
  ## Instructions for Obtaining and Visualizing data
  
@@ -20,5 +20,5 @@ Information on the bar chart race can be found [here](https://www.dexplo.org/bar
  
 ## Unit Tests
 
-In order to run the unit tests first comment the line that says "uncomment this line for unit tests," then run `$pytest test_cases.py'
+In order to run the unit tests first comment the line that says "comment this line for unit tests," which is in the file 'collect_genre_data.py.' Then run `$pytest test_cases.py'.
 
