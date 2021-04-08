@@ -57,7 +57,7 @@ accumulative_genre_cases = [
 # Define standard testing functions to check functions' outputs given certain
 # inputs defined above.
 
-@pytest.mark.parametrize("path, year_start, year_end, processed_data",
+@pytest.mark.parametrize('path, year_start, year_end, processed_data',
     count_genres_per_year_cases)
 def test_count_genres_per_year(path, year_start, year_end, processed_data):
     """
@@ -113,7 +113,7 @@ def test_count_genres_per_year_normalized_add(path, year_start, year_end,
         total += sum(value.values())
     assert  total == 100 * (year_end - year_start + 1)
 
-@pytest.mark.parametrize("path, year_start, year_end, processed_data",
+@pytest.mark.parametrize('path, year_start, year_end, processed_data',
     accumulative_genre_cases)
 def test_accumulative_genre(path, year_start, year_end, processed_data):
     """

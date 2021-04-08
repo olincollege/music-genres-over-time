@@ -1,9 +1,10 @@
 """
-Create two dictionaries that count the genres per year.
+Create three dictionaries that count the genres per year.
 count_genres_per_year counts the number of songs per genre in
-each year. accumulative_genre adds the number of songs per genre
-in each year to the amount of songs per genre for the years before
-it.
+each year. count_genres_per_year_normalized normalizes all of
+the genres per year to 100. accumulative_genre adds the number
+of songs per genre in each year to the amount of songs per genre
+for the years before it.
 """
 
 import csv
@@ -20,8 +21,8 @@ def count_genres_per_year(genre_data, year_start, year_end):
 
     ARGS:
         genre_data: A string representing the csv file with genres and years.
-        year_start: The year to start counting genres.
-        year_end: The year to end counting genres.
+        year_start: An int reprsenting the year to start counting genres.
+        year_end: An int reprsenting the year to end counting genres.
 
     RETURNS:
         counted_genres: A dictionary with the value being an int representing
@@ -64,8 +65,8 @@ def count_genres_per_year_normalized(genre_data, year_start, year_end):
 
     ARGS:
         genre_data: A string representing the csv file with genres and years.
-        year_start: The year to start counting genres.
-        year_end: The year to end counting genres.
+        year_start: An int reprsenting the year to start counting genres.
+        year_end: An int reprsenting the year to end counting genres.
 
     RETURNS:
         counted_genres: A dictionary with the value being an int representing
@@ -91,8 +92,8 @@ def accumulative_genre(genre_data, year_start, year_end):
 
     ARGS:
         genre_data: A string representing the csv file with genres and years.
-        year_start: The year to start counting genres.
-        year_end: The year to end counting genres.
+        year_start: An int reprsenting the year to start counting genres.
+        year_end: An int reprsenting the year to end counting genres.
 
     RETURNS:
         accumulated_genres: A dictionary with the value being an int representing
@@ -116,6 +117,3 @@ def accumulative_genre(genre_data, year_start, year_end):
             accumulated_genres[year][genre] = genre_count + \
                 counted_genres[year][genre]
     return accumulated_genres
-
-
-accumulative_genre('genre_year_data.csv',1946,2020)

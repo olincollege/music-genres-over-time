@@ -82,6 +82,9 @@ def create_bar_chart_race():
 
     Creates a bar chart race that animates bars that represent the cumulative
     number of top songs per genre over the years 1946 to 2020.
+
+    RETURNS:
+        race.data: An html object representing the bar chartt race animation.
     """
 
     genre_year_dataframe = create_dataframe()
@@ -106,8 +109,8 @@ def total_genre(year_start, year_end):
     year start to year end in each genre as the values.
 
     ARGS:
-        year_start: an int representing the first year that we start counting songs.
-        year_end: an int representing the last year we count the songs.
+        year_start: An int representing the first year that we start counting songs.
+        year_end: An int representing the last year we count the songs.
     RETURNS:
         total_genre: A dictionary with the keys being strings representing each genre,
         and the values being ints representing the total number of songs in each genre
@@ -166,7 +169,6 @@ def create_pichart(year_start, year_end):
     #uncomment this line to save the pie plots
     #plt.savefig(f'visualizations/{year_start}_to_{year_end}_genre_pie_chart.png', \
     #           bbox_inches='tight')
-    return plt.show()
 
 def generate_pies():
     """
